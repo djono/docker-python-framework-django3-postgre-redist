@@ -1,0 +1,30 @@
+version: "3"
+services:
+  database:
+    image: ${DATABASE_IMG}
+    container_name: "${COMPOSE_PROJECT_NAME}-database"
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  web:
+    build: .
+    container_name: "${COMPOSE_PROJECT_NAME}-web"
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "${HOST_MACHINE_UNSECURE_HOST_PORT}:8000"
+    environment:
+      - POSTGRES_NAME=${POSTGRES_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    depends_on:
+      - database
+  redis:
+    container_name: "${COMPOSE_PROJECT_NAME}-redis"
+    image: ${REDIS_IMG}
+    ports:
+      - "127.0.0.1:${HOST_MACHINE_REDIS_PORT}:6379"

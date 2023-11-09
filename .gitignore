@@ -1,0 +1,28 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local development settings
+#.env
+.env.local
+.env.*.local
+.local/
+db.sqlite3
+media/
+
+# Static files
+/staticfiles/
+*.pyc
+
+# Log files
+logs/
+*.log
+
+# Test database
+test_db.sqlite3
+
+# Docker
+# docker-compose.yml
+# .dockerignore
+# Dockerfile*
